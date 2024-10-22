@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-item" onclick="updateContent('/index')">
+            <i>Dashboard</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/scan')">
+            <i>Scan</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/groups')">
+            <i>Groups</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/settings')">
+            <i>Settings</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/reports')">
+            <i>Reports</i>
+        </div>
+    </div>
+
+<div class="main-content">
+    <div class="deploy-section">
+        <div class="download-block">
+            <h1>Downloadable Reports</h1>
+            <table>
+                <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>File Size</th>
+                    <th>File Type</th>
+                    <th>Date Created</th>
+                    <th>Download</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Report1.pdf</td>
+                    <td>1.2 MB</td>
+                    <td>PDF</td>
+                    <td>2024-09-01</td>
+                    <td><a href="example1.pdf" download>Download</a></td>
+                </tr>
+                <tr>
+                    <td>Report2.docx</td>
+                    <td>500 KB</td>
+                    <td>DOCX</td>
+                    <td>2024-09-01</td>
+                    <td><a href="example2.docx" download>Download</a></td>
+                </tr>
+                <tr>
+                    <td>Report3.zip</td>
+                    <td>2.5 MB</td>
+                    <td>ZIP</td>
+                    <td>2024-09-01</td>
+                    <td><a href="example3.zip" download>Download</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html>

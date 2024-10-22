@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='main.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-item" onclick="updateContent('/index')">
+            <i>Dashboard</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/scan')">
+            <i>Scan</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/groups')">
+            <i>Groups</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/settings')">
+            <i>Settings</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/reports')">
+            <i>Reports</i>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="deploy-section">
+            <div class="download-block">
+                <h1>Groups</h1>
+                <table id="taskTable">
+                    <thead>
+                        <tr>
+                            <th>Group Name</th>
+                            <th>Group Status</th>
+                            <th>Scan Progress</th>
+                            <th>Date Created</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='tasks.js')}}"></script>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html>

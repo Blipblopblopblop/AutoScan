@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Group 1",
+        "status": "Scanning",
+        "progress": 40,
+        "date": "2024-09-01"
+    },
+    {
+        "name": "Group 2",
+        "status": "Finished",
+        "progress": 100,
+        "date": "2024-09-01"
+    },
+    {
+        "name": "Group 4",
+        "status": "Pending",
+        "progress": 0,
+        "date": "2024-09-23"
+    },
+    {
+        "name": "Group 4",
+        "status": "Pending",
+        "progress": 0,
+        "date": "2024-09-23"
+    }
+]
