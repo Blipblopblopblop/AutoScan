@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploy Agent</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-item" onclick="updateContent('/index')">
+            <i>Dashboard</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/scan')">
+            <i>Scan</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/groups')">
+            <i>Groups</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/settings')">
+            <i>Settings</i>
+        </div>
+        <div class="sidebar-item" onclick="updateContent('/reports')">
+            <i>Reports</i>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="deploy-section">
+            <h1>Create New Scan Group</h1>
+            <form>
+                <div class="form-group">
+                    <label for="task-name">Group Name</label>
+                    <input type="text" id="task-name" name="task-name" placeholder="New Group">
+                </div>
+                <div class="form-group">
+                    <label for="scan-config">Scan Config</label>
+                    <select id="scan-config" name="scan-config">
+                        <option value="full-and-fast">Full and fast</option>
+                        <option value="custom-scan">Custom scan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="target-host">Target Host(s)</label>
+
+                    <input type="text" id="target-host" name="target-host" value="" placeholder="100.55.233.25">
+                </div>
+                <div class="">
+                    <label for="start-immediately">Start immediately
+                        <input type="radio" id="start-immediately" name="schedule" value="immediately" checked>
+                    </label>
+                    
+                    <label for="create-schedule">Create Schedule
+                        <input type="radio" id="create-schedule" name="schedule" value="schedule">
+                    </label>
+                    <input type="date" id="schedule-date" name="schedule-date">
+                    <input type="time" id="schedule-time" name="schedule-time">
+                </div>
+
+                <!-- Email Report -->
+                <div class="form-group">
+                    <label for="email-report">Email report to</label>
+                    <input type="email" id="email-report" name="email-report" placeholder="example@domain.com">
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='scan.js') }}"></script>
+
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html>

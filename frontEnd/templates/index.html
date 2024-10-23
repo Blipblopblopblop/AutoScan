@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
+</head>
+<body>
+<div class="sidebar">
+    <div class="sidebar-item" onclick="updateContent('/index')">
+        <i>Dashboard</i>
+    </div>
+    <div class="sidebar-item" onclick="updateContent('/scan')">
+        <i>Scan</i>
+    </div>
+    <div class="sidebar-item" onclick="updateContent('/groups')">
+        <i>Groups</i>
+    </div>
+    <div class="sidebar-item" onclick="updateContent('/settings')">
+        <i>Settings</i>
+    </div>
+    <div class="sidebar-item" onclick="updateContent('/reports')">
+        <i>Reports</i>
+    </div>
+</div>
+<div class="main-content">
+    <div class="welcome-section">
+        <h1 id="contentTitle">Welcome</h1>
+    </div>
+    <div class="grid-container">
+        <div class="grid-item">
+            <img src="{{ url_for('static', filename='images/content1.jpg') }}" width="400" alt="My Image">
+        </div>
+        <div class="grid-item">
+            <img src="{{ url_for('static', filename='images/content2.jpg') }}" width="400" alt="My Image">
+        </div>
+        <div class="grid-item">
+            <img src="{{ url_for('static', filename='images/content3.jpg') }}" width="400" alt="My Image">
+        </div>
+        <div class="grid-item">
+            <img src="{{ url_for('static', filename='images/content4.jpg') }}" width="400" alt="My Image">
+        </div>
+    </div>
+</div>
+
+<script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html>
