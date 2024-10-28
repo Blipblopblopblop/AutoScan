@@ -12,7 +12,7 @@ from gvm.errors import GvmError
 connection = TLSConnection(hostname='100.74.219.96', port=9390)
 transform = EtreeCheckCommandTransform()
 username = 'Team'
-password = 'UsK]+m1KXNAyTT?fpWjS'
+password = ''
 
 def connect_to_gmp():
     try:

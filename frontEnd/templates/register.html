@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='main.css') }}">
+    <title>Register - CVE Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
     <div class="sidebar">
@@ -29,28 +29,23 @@
     </div>
 
     <div class="main-content">
-        <div class="deploy-section">
-            <div class="download-block">
-                <h1>Groups</h1>
-                <table id="taskTable">
-                    <thead>
-                        <tr>
-                            <th>Group Name</th>
-                            <th>Group Status</th>
-                            <th>Scan Progress</th>
-                            <th>Date Created</th>
-                            <th>Options</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-            </div>
+        <div class="cve-section">
+            <h1>CVE Details</h1>
+            <table id="cve-table">
+                <thead>
+                    <tr>
+                        <th>CVE ID</th>
+                        <th>Severity</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <script src="{{url_for('static', filename='tasks.js')}}"></script>
-    <script src="{{url_for('static', filename='script.js')}}"></script>
+    <script src="{{url_for('static', filename='register.js')}}"></script>
 </body>
 </html>

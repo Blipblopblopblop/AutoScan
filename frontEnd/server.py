@@ -31,6 +31,10 @@ def schedule():
 def reports():
     return render_template('reports.html')
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    return render_template('register.html')
+
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     return render_template('settings.html')
@@ -51,7 +55,7 @@ connection = TLSConnection(hostname='100.74.219.96', port=9390)
 transform = EtreeCheckCommandTransform()
 
 username = 'Team'
-password = 'UsK]+m1KXNAyTT?fpWjS'
+password = ''
 
 # retrieve port lists
 @app.route('/add_task', methods=['POST'])
