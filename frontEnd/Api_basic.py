@@ -12,7 +12,7 @@ from gvm.errors import GvmError
 connection = TLSConnection(hostname='100.74.219.96', port=9390)
 transform = EtreeCheckCommandTransform()
 username = 'Team'
-password = ''
+password = 'UsK]+m1KXNAyTT?fpWjS'
 
 def connect_to_gmp():
     try:
@@ -153,13 +153,13 @@ def get_existing_tasks():
 
         for task in tasks_response.xpath('task'):
             task_info = {
-                'id': task.get('id'),  # Include task ID
+                'id': task.get('id'),
                 'name': task.find('name').text,
                 'status': task.find('status').text,
                 'progress': task.find('progress').text if task.find('progress') is not None else '0',
                 'date': task.find('creation_time').text,
-                'target_id': task.find('target').get('id'),  # Ensure target ID is fetched
-                'schedule_id': task.find('schedule').get('id') if task.find('schedule') is not None else None  # Ensure schedule ID is fetched if exists
+                'target_id': task.find('target').get('id'),  
+                'schedule_id': task.find('schedule').get('id') if task.find('schedule') is not None else None 
             }
             tasks.append(task_info)
 
@@ -169,7 +169,6 @@ def get_existing_tasks():
         print(f"Error fetching tasks: {e}")
         return None
 
-    
 
 def delete_task(task_id):
     try:
@@ -184,3 +183,61 @@ def delete_task(task_id):
     except GvmError as e:
         print(f"Error deleting task {task_id}: {e}", file=sys.stderr)
         return {"status": "Failed", "error": str(e)}
+
+
+def getLatestReportIDs():
+    try:
+        with Gmp(connection=connection, transform=transform) as gmp:
+            gmp.authenticate(username, password)
+            
+            # Get tasks
+            resp = gmp.get_tasks()
+            
+          
+            for task in resp.findall('task'):
+                last = task.find('last_report')
+                if last is not None:
+                    report = last.find('report')
+                    if report is not None:
+                     
+                        getCVESlatesrreport(report.get('id'),gmp)
+                        print(f"Report ID: {report.get('id')}")
+                    else:
+                        print('No report available for this task.')
+                else:
+                    print('No last report found for this task.')
+    except GvmError as e:
+        print('An error occurred:', e, file=sys.stderr)
+
+
+def getCVESlatesrreport(reportID,gmp):
+    if(reportID):
+        PDF = 'c402cc3e-b531-11e1-9163-406186ea4fc5'
+        TXT= 'a3810a62-1f62-11e1-9219-406186ea4fc5'
+        XML = 'a994b278-1f62-11e1-96ac-406186ea4fc5'
+        report = gmp.get_report(reportID,report_format_id=XML,filter_string="apply_overrides=0 levels=hml rows=100 min_qod=70 first=1 sort-reverse=severity")
+        cve_results = []
+        for result in report.findall('.//result'):
+            cve_ref = result.find('.//ref[@type="cve"]')
+            if cve_ref is not None:
+                cve_id = cve_ref.attrib['id']
+            else:
+                cve_id = None  
+            severities = result.find('.//severities')
+            severity_value = severities.attrib['score']  if severities is not None else None
+              
+            if severity_value is not None and float(severity_value) > 0 and cve_id is not None: 
+                
+                    # Get the description
+                description = result.find('.//description')
+                description_value = description.text.strip() if description is not None else 'No description available.'
+                cve_results.append({
+                    'CVE ID': cve_id,
+                    'Severity': severity_value,
+                    'Description': description_value})
+        for entry in cve_results:
+            print(f"CVE ID: {entry['CVE ID']}, Severity: {entry['Severity']}, Description: {entry['Description']}\n")
+
+      
+
+getLatestReportIDs()

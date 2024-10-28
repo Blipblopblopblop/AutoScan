@@ -51,7 +51,7 @@ connection = TLSConnection(hostname='100.74.219.96', port=9390)
 transform = EtreeCheckCommandTransform()
 
 username = 'Team'
-password = ''
+password = 'UsK]+m1KXNAyTT?fpWjS'
 
 # retrieve port lists
 @app.route('/add_task', methods=['POST'])
@@ -112,8 +112,59 @@ def remove_task(task_id):
     except Exception as e:
         print(f"Error while deleting task: {e}", file=sys.stderr)
         return jsonify({"status": "Failed", "error": str(e)}), 500
+    
+@app.route('/get_latest_reports', methods=['GET'])
+def get_latest_reports():
+    try:
+        with Gmp(connection=connection, transform=transform) as gmp:
+            gmp.authenticate(username, password)
+            report_ids = []
+            
+            # Get tasks
+            resp = gmp.get_tasks()
+     
+            for task in resp.findall('task'):
+                last = task.find('last_report')
+                if last is not None:
+                    report = last.find('report')
+                    if report is not None:
+                        report_id = report.get('id')
+                        report_data = get_CVES_latest_report(report_id, gmp)
+                        report_ids.append(report_data)
+            
+            return jsonify(report_ids)
+    except GvmError as e:
+        print('An error occurred:', e, file=sys.stderr)
+        return jsonify({"error": str(e)}), 500
 
 
+def get_CVES_latest_report(report_id, gmp):
+    if not report_id:
+        return {"error": "No report ID provided"}
+
+    XML = 'a994b278-1f62-11e1-96ac-406186ea4fc5'
+    report = gmp.get_report(report_id, report_format_id=XML, filter_string="apply_overrides=0 levels=hml rows=100 min_qod=70 first=1 sort-reverse=severity")
+    
+    cve_results = []
+    for result in report.findall('.//result'):
+        cve_ref = result.find('.//ref[@type="cve"]')
+        cve_id = cve_ref.attrib['id'] if cve_ref is not None else None
+        severities = result.find('.//severities')
+        severity_value = severities.attrib['score'] if severities is not None else None
+        
+        if severity_value is not None and float(severity_value) > 0 and cve_id is not None:
+            description = result.find('.//description')
+            description_value = description.text.strip() if description is not None else 'No description available.'
+            cve_results.append({
+                'CVE ID': cve_id,
+                'Severity': severity_value,
+                'Description': description_value
+            })
+    
+    return {
+        'Report ID': report_id,
+        'CVEs': cve_results
+    }
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8000)
