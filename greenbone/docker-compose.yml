@@ -66,6 +66,10 @@ services:
     ports:
       - 9390:9390
     volumes:
+     # Move the private key into the container. Replace <username> with your own.
+      - /home/ali/.ssl/serverkey.pem:/var/lib/gvm/private/CA/serverkey.pem
+    # Move the certificate into the container Replace <username> with your own.
+      - /home/ali/.ssl/servercert.pem:/var/lib/gvm/CA/servercert.pem
       - gvmd_data_vol:/var/lib/gvm
       - scap_data_vol:/var/lib/gvm/scap-data/
       - cert_data_vol:/var/lib/gvm/cert-data
